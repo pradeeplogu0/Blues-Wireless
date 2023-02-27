@@ -1,0 +1,212 @@
+[
+    {
+        "id": "38daddc335062301",
+        "type": "tab",
+        "label": "Blues Switch Control",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "8557b774dfbe57de",
+        "type": "mqtt in",
+        "z": "38daddc335062301",
+        "name": "Qubitro Downlink",
+        "topic": "491136a2-8b28-4b09-ac04-f81ac67bcdec",
+        "qos": "2",
+        "datatype": "auto-detect",
+        "broker": "6d40b7b21c734b53",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 260,
+        "y": 380,
+        "wires": [
+            [
+                "7f542e9619766dd8",
+                "6db6b2565f5e9954"
+            ]
+        ]
+    },
+    {
+        "id": "7f542e9619766dd8",
+        "type": "debug",
+        "z": "38daddc335062301",
+        "name": "Log JSON",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 530,
+        "y": 420,
+        "wires": []
+    },
+    {
+        "id": "6db6b2565f5e9954",
+        "type": "function",
+        "z": "38daddc335062301",
+        "name": "JSON decode",
+        "func": "if (msg.payload.Alarm==true)\n{\n    msg.payload=\"1\"\n}\nelse { msg.payload = \"0\"}\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 540,
+        "y": 520,
+        "wires": [
+            [
+                "08ff0c223fd6efd8"
+            ]
+        ]
+    },
+    {
+        "id": "1b373876dab8a947",
+        "type": "comment",
+        "z": "38daddc335062301",
+        "name": "Relay Control Block",
+        "info": "",
+        "x": 270,
+        "y": 320,
+        "wires": []
+    },
+    {
+        "id": "08ff0c223fd6efd8",
+        "type": "serial out",
+        "z": "38daddc335062301",
+        "name": "LED",
+        "serial": "e06c99bb863931a3",
+        "x": 770,
+        "y": 520,
+        "wires": []
+    },
+    {
+        "id": "044f21d83048d673",
+        "type": "mqtt out",
+        "z": "38daddc335062301",
+        "name": "Qubitro Uplink",
+        "topic": "491136a2-8b28-4b09-ac04-f81ac67bcdec",
+        "qos": "",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "6d40b7b21c734b53",
+        "x": 440,
+        "y": 180,
+        "wires": []
+    },
+    {
+        "id": "882e381dd902190b",
+        "type": "inject",
+        "z": "38daddc335062301",
+        "name": "Perfect",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "1",
+        "topic": "",
+        "payload": "{\"Alarm\":false,\"Object\":\"Perfect\",\"Log Level\":0}",
+        "payloadType": "json",
+        "x": 230,
+        "y": 200,
+        "wires": [
+            [
+                "044f21d83048d673"
+            ]
+        ]
+    },
+    {
+        "id": "09095ce433a32cff",
+        "type": "inject",
+        "z": "38daddc335062301",
+        "name": "Defect",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "1",
+        "topic": "",
+        "payload": "{\"Alarm\":true,\"Object\":\"Defect\",\"Log Level\":1}",
+        "payloadType": "json",
+        "x": 230,
+        "y": 140,
+        "wires": [
+            [
+                "044f21d83048d673"
+            ]
+        ]
+    },
+    {
+        "id": "c1751536bad018f0",
+        "type": "comment",
+        "z": "38daddc335062301",
+        "name": "Debug Block",
+        "info": "",
+        "x": 430,
+        "y": 140,
+        "wires": []
+    },
+    {
+        "id": "6d40b7b21c734b53",
+        "type": "mqtt-broker",
+        "name": "Qubitro Downlink",
+        "broker": "broker.qubitro.com",
+        "port": "1883",
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": "4",
+        "keepalive": "60",
+        "cleansession": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willPayload": "",
+        "willMsg": {},
+        "userProps": "",
+        "sessionExpiry": ""
+    },
+    {
+        "id": "e06c99bb863931a3",
+        "type": "serial-port",
+        "serialport": "COM4",
+        "serialbaud": "115200",
+        "databits": "8",
+        "parity": "none",
+        "stopbits": "1",
+        "waitfor": "",
+        "dtr": "none",
+        "rts": "none",
+        "cts": "none",
+        "dsr": "none",
+        "newline": "\\n",
+        "bin": "false",
+        "out": "char",
+        "addchar": "",
+        "responsetimeout": "10000"
+    }
+]
